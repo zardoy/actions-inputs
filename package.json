@@ -2,12 +2,15 @@
     "name": "actions-inputs",
     "description": "[GitHub Actions] Auto generate action.yml input params types for usage in TypeScript",
     "version": "0.0.1",
-    "main": "index.js",
-    "bin": "bin.js",
+    "main": "build/index.js",
+    "bin": "build/bin.js",
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
+    "files": [
+        "build"
+    ],
     "scripts": {
-        "build": "tsc && cpy package.json build"
+        "build": "tsc"
     },
     "dependencies": {
         "@actions/core": "^1.2.6",
@@ -20,8 +23,7 @@
     "devDependencies": {
         "@types/js-yaml": "^4.0.0",
         "@types/minimist": "^1.2.1",
-        "@types/node": "^14.14.27",
-        "cpy-cli": "^3.1.1"
+        "@types/node": "^14.14.27"
     },
     "keywords": [
         "typescript",
