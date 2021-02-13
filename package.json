@@ -3,6 +3,7 @@
     "description": "[GitHub Actions] Auto generate action.yml input params types for usage in TypeScript",
     "version": "0.0.1",
     "main": "build/index.js",
+    "types": "build/index.d.ts",
     "bin": "build/bin.js",
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
