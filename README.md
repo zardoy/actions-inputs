@@ -33,7 +33,7 @@ inputs:
 
 3. Define `postinstall` script in `package.json`:
 
-```json
+```json5
 {
     "scripts": {
         //...
