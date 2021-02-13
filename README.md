@@ -59,3 +59,4 @@ By default the type infers from default property, but if it required and not a s
 
 - [ ] Auto generate type `inputs` edit in `action.yml` (show warning on `main`)
 - [ ] Use **main-dev** Action deploy system (remove required)
+- [ ] Add --watch options
