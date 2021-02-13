@@ -1,6 +1,6 @@
 {
     "name": "actions-inputs",
-    "description": "[GitHub Actions] Auto generate and use input parameters in TypeScript",
+    "description": "[GitHub Actions] Auto generate action.yml input params types for usage in TypeScript",
     "version": "0.0.1",
     "main": "index.js",
     "bin": "bin.js",
