@@ -6,9 +6,6 @@
     "bin": "bin.js",
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
-    "files": [
-        "build"
-    ],
     "scripts": {
         "build": "tsc && cpy package.json build"
     },
