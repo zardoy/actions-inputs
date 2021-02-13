@@ -1,10 +1,14 @@
 {
     "name": "actions-inputs",
     "description": "[GitHub Actions] Auto generate and use input parameters in TypeScript",
+    "version": "0.0.1",
     "main": "build/index.js",
     "bin": "build/bin.js",
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
+    "files": [
+        "build"
+    ],
     "scripts": {
         "build": "tsc"
     },
