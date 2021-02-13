@@ -81,3 +81,4 @@ By default the type infers from input's `default` property, but if it's required
 - [ ] Use **main-dev** Action deploy system (remove required)
 - [ ] Describe Files Structure and does it work. Why some ts files in src why some in src etc.
 - [ ] Testsss
+- [ ] Add --watch options
