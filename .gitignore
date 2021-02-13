@@ -21,6 +21,7 @@
 !/build/entrypointTemplate.ts
 !/build/index.js
 !/build/tsconfig.json
+!/build/index.d.ts
 
 # misc
 local-tests
