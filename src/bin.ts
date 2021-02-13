@@ -13,7 +13,7 @@ import { replaceInFileSync } from "replace-in-file";
 type ExpectedArgs = ReturnType<typeof minimist> & {
     help?: boolean;
     /**
-     * @default lower
+     * @default preserve
      */
     case?: "preserve" | "lower" | "upper";
     /**
@@ -43,7 +43,7 @@ const isActionYmlWithInputs = (obj: any): obj is ActionYmlWithInputs => {
 const args: ExpectedArgs = minimist(process.argv);
 
 const normalizeInputName = (inputName: string): string => {
-    let { case: argCase = "lower" } = args;
+    let { case: argCase = "preserve" } = args;
     return argCase === "lower" ? inputName.toLowerCase() :
         argCase === "upper" ? inputName.toUpperCase() : inputName;
 };
