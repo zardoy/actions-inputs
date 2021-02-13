@@ -74,7 +74,7 @@ if (args._.includes("generate")) {
     }
     let generatedInterface = "",
         generatedInputsConfig = "";
-    Object.entries(actionYml.inputs).forEach(([rawInputName, { default: defaultVal, description: rawDescription, required }]) => {
+    Object.entries(actionYml.inputs).forEach(([rawInputName, { default: defaultVal, description: rawDescription, required = false }]) => {
         const hasDefaultVal = defaultVal !== undefined;
         const inputName = normalizeInputName(rawInputName);
         if (/\s/.test(rawInputName)) {
@@ -97,10 +97,10 @@ if (args._.includes("generate")) {
  * ${description} ${defaultAnnotation}
  */` : "";
         generatedInterface += `${jsDoc}
-${inputName}: ${inputType}`;
+${inputName}${!required ? "?" : ""}: ${inputType}`;
         generatedInputsConfig += `
 ${inputName}: {
-    required: ${required ?? false},
+    required: ${required},
     runtimeType: "${inputType}"
 },`;
     });
