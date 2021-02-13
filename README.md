@@ -4,6 +4,14 @@
 
 Main goal of this module is to auto-generate **type-safe** code for working with [GitHub Actions inputs](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs).
 
+- [Actions Inputs](#actions-inputs)
+  - [Use it in Your Action](#use-it-in-your-action)
+  - [Temporary Limitations](#temporary-limitations)
+  - [Things to Note](#things-to-note)
+  - [Options](#options)
+  - [Possible Types](#possible-types)
+  - [TODO](#todo)
+
 ## Use it in Your Action
 
 1. Install it `yarn|npm add actions-inputs`
@@ -61,13 +69,17 @@ inputs.retries
 - TypeScript is used to generate library. It's in regular dependencies.
 - You need to manually generate library in `postinstall` script.
 
+## Things to Note
+
+- Passing an empty string is the same as not passing anything.
+
 ## Options
 
 You can set options before first `getInput` call.
 
 List of options: [interface Options](build/entrypointTemplate.ts).
 
-### Possible Types
+## Possible Types
 
 By default the type infers from input's `default` property, but if it's required and not a string, you need to specify type in start of `description` like this: `description: [boolean] should I show you a red light?`.
 
@@ -82,3 +94,4 @@ By default the type infers from input's `default` property, but if it's required
 - [ ] Describe Files Structure and does it work. Why some ts files in src why some in src etc.
 - [ ] Testsss
 - [ ] Add --watch options
+- [ ] StringArray type
