@@ -2,6 +2,8 @@
 
 // todo run postinstall
 
+// todo nullable inputs FIX
+
 import execa from "execa";
 import fs from "fs";
 import { load } from "js-yaml";
@@ -97,7 +99,7 @@ if (args._.includes("generate")) {
  * ${description} ${defaultAnnotation}
  */` : "";
         generatedInterface += `${jsDoc}
-${inputName}${!required ? "?" : ""}: ${inputType}`;
+${inputName}${!required && !hasDefaultVal ? "?" : ""}: ${inputType}`;
         generatedInputsConfig += `
 ${inputName}: {
     required: ${required},
