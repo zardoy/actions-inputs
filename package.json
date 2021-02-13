@@ -1,0 +1,30 @@
+{
+    "name": "actions-inputs",
+    "description": "[GitHub Actions] Auto generate and use input parameters in TypeScript",
+    "main": "build/index.js",
+    "bin": "build/bin.js",
+    "author": "Vitaly Turovsky <vital2580@icloud.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@actions/core": "^1.2.6",
+        "execa": "^5.0.0",
+        "js-yaml": "^4.0.0",
+        "minimist": "^1.2.5",
+        "replace-in-file": "^6.2.0",
+        "typescript": "^4.1.5"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.0",
+        "@types/minimist": "^1.2.1",
+        "@types/node": "^14.14.27"
+    },
+    "peerDependencies": {},
+    "keywords": [
+        "typescript",
+        "github",
+        "github action",
+        "input parameters",
+        "auto generate",
+        "action.yml"
+    ]
+}

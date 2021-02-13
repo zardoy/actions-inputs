@@ -1,0 +1,19 @@
+name: Deploy lib to GitHub branch
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gh-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_branch: build
+          force_orphan: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

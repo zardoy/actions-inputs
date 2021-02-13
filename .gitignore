@@ -1,0 +1,38 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# prisma development database
+/prisma/dev.db
+# prisma development migrations
+/prisma/migrations
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+/test-*
+
+# production
+/dist
+!/build/
+/build/*
+!/build/entrypointTemplate.ts
+!/build/index.js
+!/build/tsconfig.json
+
+# misc
+local-tests
+.eslintcache
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+debug.log

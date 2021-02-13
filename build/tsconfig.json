@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "outDir": "../../.actions-inputs/",
+        "outFile": "",
+        "declaration": true
+    },
+    "files": [
+        "index.ts"
+    ]
+}
