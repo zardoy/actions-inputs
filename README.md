@@ -32,9 +32,10 @@ inputs:
       [boolean] Run everything except for the copying, removing and commiting functionality.
     required: true
   RETRIES:
+    # You don't need to specify type in description if it can be inferred from default property
     description:
-      [number] The number of retries.
-    # You can specify string in default, it will be parsed to number anyway.
+      The number of retries.
+    # But if you specify string here, resulting type will be string too so be careful.
     default: 3
     required: false
 ```

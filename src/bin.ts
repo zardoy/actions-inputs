@@ -83,6 +83,7 @@ if (args._.includes("generate")) {
             throw new TypeError(`Input with name ${rawInputName} must not contain any space characters`);
         }
         // todo replace warn
+        // todo check description type against default value
         if (!rawDescription) console.warn(`Input ${rawInputName} missing description property!`);
         // New lines (\n) are ignored by VSCode so we are replacing them by regular space
         const description = rawDescription ? rawDescription.replace(/\n/g, " ").trim() : "";
