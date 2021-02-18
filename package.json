@@ -32,8 +32,8 @@
         "github",
         "github action",
         "input parameters",
-        "auto generate",
-        "autogen",
+        "generate types",
+        "codegen",
         "action.yml"
     ]
 }
