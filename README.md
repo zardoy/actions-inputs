@@ -32,7 +32,7 @@ inputs:
       [boolean] Run everything except for the copying, removing and commiting functionality.
     required: true
   RETRIES:
-    description:
+    description: |
       [number] The number of retries.
     # You can specify string in default, it will be parsed to number anyway.
     default: 3
@@ -91,7 +91,5 @@ By default the type infers from input's `default` property, but if it's required
 
 - [ ] Auto generate type `inputs` edit in `action.yml` (show warning on `main`)
 - [ ] Use **main-dev** Action deploy system (remove required)
-- [ ] Describe Files Structure and does it work. Why some ts files in src why some in src etc.
-- [ ] Testsss
 - [ ] Add --watch options
 - [ ] StringArray type

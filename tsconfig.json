@@ -1,13 +1,7 @@
 {
+    "extends": "@zardoy/tsconfig/node",
     "compilerOptions": {
-        "target": "ES2018",
-        "module": "CommonJS",
-        "moduleResolution": "Node",
-        "esModuleInterop": true,
-        "strict": true,
-        "outDir": "./build",
+        "outDir": "./build"
     },
-    "include": [
-        "src"
-    ]
+    "include": ["src"]
 }
