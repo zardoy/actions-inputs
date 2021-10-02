@@ -1,7 +1,7 @@
 {
     "name": "actions-inputs",
     "description": "[GitHub Actions] Auto generate action.yml input params types for usage in TypeScript",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "bin": "build/bin.js",
@@ -12,27 +12,38 @@
         "build"
     ],
     "scripts": {
-        "build": "tsc"
+        "prepublishOnly": "tsc"
     },
     "dependencies": {
-        "@actions/core": "^1.2.6",
-        "execa": "^5.0.0",
-        "js-yaml": "^4.0.0",
+        "@actions/core": "^1.6.0",
+        "fs-extra": "^10.0.0",
+        "generated-module": "^0.0.2",
+        "js-yaml": "^4.1.0",
+        "jsonfile": "^6.1.0",
         "minimist": "^1.2.5",
-        "replace-in-file": "^6.2.0",
-        "typescript": "^4.1.5"
+        "ts-morph": "^12.0.0"
     },
     "devDependencies": {
-        "@types/js-yaml": "^4.0.0",
-        "@types/minimist": "^1.2.1",
-        "@types/node": "^14.14.27"
+        "@types/fs-extra": "^9.0.13",
+        "@types/jest": "^27.0.2",
+        "@types/js-yaml": "^4.0.3",
+        "@types/jsonfile": "^6.0.1",
+        "@types/minimist": "^1.2.2",
+        "@types/node": "^14.17.20",
+        "@zardoy/tsconfig": "^1.2.2",
+        "jest": "^27.2.4",
+        "ts-jest": "^27.0.5",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3"
     },
     "keywords": [
         "typescript",
         "github",
         "github action",
+        "inputs",
         "input parameters",
-        "auto generate",
+        "generated",
+        "generate",
         "autogen",
         "action.yml"
     ]

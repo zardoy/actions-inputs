@@ -6,7 +6,7 @@ Main goal of this module is to auto-generate **type-safe** code for working with
 
 - [Actions Inputs](#actions-inputs)
   - [Use it in Your Action](#use-it-in-your-action)
-  - [Temporary Limitations](#temporary-limitations)
+  - [Casing](#casing)
   - [Things to Note](#things-to-note)
   - [Options](#options)
   - [Possible Types](#possible-types)
@@ -32,7 +32,7 @@ inputs:
       [boolean] Run everything except for the copying, removing and commiting functionality.
     required: true
   RETRIES:
-    description:
+    description: |
       [number] The number of retries.
     # You can specify string in default, it will be parsed to number anyway.
     default: 3
@@ -64,13 +64,14 @@ inputs.retries
 
 ```
 
-## Temporary Limitations
+## Casing
 
-- TypeScript is used to generate library. It's in regular dependencies.
-- You need to manually generate library in `postinstall` script.
+Despite of the [GitHub recommendation](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs) to use lowercase inputs in actions, I find that inputs in uppercase more readable. And it doesn't matter what type of case.
 
 ## Things to Note
 
+TODO test with postinstall
+- You need to regenerate
 - Passing an empty string is the same as not passing anything.
 
 ## Options
@@ -91,7 +92,5 @@ By default the type infers from input's `default` property, but if it's required
 
 - [ ] Auto generate type `inputs` edit in `action.yml` (show warning on `main`)
 - [ ] Use **main-dev** Action deploy system (remove required)
-- [ ] Describe Files Structure and does it work. Why some ts files in src why some in src etc.
-- [ ] Testsss
 - [ ] Add --watch options
 - [ ] StringArray type
