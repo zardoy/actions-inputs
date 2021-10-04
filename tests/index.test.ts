@@ -24,7 +24,7 @@ const yamlExample = {
     },
 }
 
-test('generates types', async () => {
+test('Generates types from example', async () => {
     const readFileSpy = jest.spyOn(fs.promises, 'readFile')
     readFileSpy.mockResolvedValueOnce('')
     const spy = jest.spyOn(jsYaml, 'load')

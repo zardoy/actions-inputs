@@ -1,6 +1,6 @@
 {
     "name": "actions-inputs",
-    "description": "[GitHub Actions] Auto generate action.yml input params types for usage in TypeScript",
+    "description": "[GitHub Actions] Make inputs of your action typed",
     "version": "0.1.0",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -16,10 +16,12 @@
     },
     "dependencies": {
         "@actions/core": "^1.6.0",
+        "commander": "^8.2.0",
         "fs-extra": "^10.0.0",
         "generated-module": "^0.0.2",
         "js-yaml": "^4.1.0",
         "jsonfile": "^6.1.0",
+        "lodash": "^4.17.21",
         "minimist": "^1.2.5",
         "ts-morph": "^12.0.0"
     },
@@ -28,6 +30,7 @@
         "@types/jest": "^27.0.2",
         "@types/js-yaml": "^4.0.3",
         "@types/jsonfile": "^6.0.1",
+        "@types/lodash": "^4.14.175",
         "@types/minimist": "^1.2.2",
         "@types/node": "^14.17.20",
         "@zardoy/tsconfig": "^1.2.2",

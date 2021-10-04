@@ -1,9 +1,14 @@
-import { Project, StatementStructures, StructureKind, Writers } from 'ts-morph'
-import { compilerOptions, createJsdoc } from 'generated-module/build/ts-morph-utils'
-import { join } from 'path'
-import { ensureDir } from 'fs-extra'
 import fs from 'fs'
+import { ensureDir } from 'fs-extra'
+import { compilerOptions, createJsdoc } from 'generated-module/build/ts-morph-utils'
 import { load as parseYaml } from 'js-yaml'
+import { writeFile } from 'jsonfile'
+import { mapValues } from 'lodash'
+import { join } from 'path'
+import { CodeBlockWriter, Project, StatementStructures, StructureKind, Writers } from 'ts-morph'
+import { Command } from 'commander'
+
+const program = new Command()
 
 const defaultOptions = {
     /**
@@ -27,6 +32,8 @@ const defaultOptions = {
      * If `true` setting new value to input will throw a TypeError
      */
     readOnlyInputs: false,
+    /** Skip generating module and save TS source on given path instead */
+    savePath: false as false | string,
 }
 
 export type Options = Partial<typeof defaultOptions>
@@ -35,6 +42,7 @@ export const generateTypes = async ({
     actionYmlPath = join(process.cwd(), 'action.yml'),
     case: inputNameCase = 'preserve',
     readOnlyInputs = false,
+    savePath = false,
     throwOnIncorrectType = true,
     throwOnMissingRequired = true,
 }: Options = {}) => {
@@ -70,7 +78,7 @@ export const generateTypes = async ({
     }
     const supportedTypes = ['boolean', 'number', 'string'] as const
 
-    const runtimeTypes: Record<string, { runtimeType: keyof typeof supportedTypes; isRequired: boolean }> = {}
+    const runtimeTypes: Record<string, { runtimeType: string; isRequired: boolean }> = {}
 
     for (const [inputName, { default: defaultValue, description, required }] of Object.entries(yaml.inputs)) {
         if (/\s/.test(inputName)) {
@@ -101,19 +109,24 @@ export const generateTypes = async ({
 
         if (!isArrayType(supportedTypes, inputType)) throw new TypeError(`Input ${inputName} has unsupported types are ${inputType}`)
 
+        const isRequired = throwOnMissingRequired ? required : false
+        runtimeTypes[inputNameWithCasing] = {
+            isRequired,
+            runtimeType: inputType,
+        }
         inputInterface.properties!.push({
             name: inputNameWithCasing,
-            hasQuestionToken: throwOnMissingRequired ? !required : true,
+            type: inputType,
+            hasQuestionToken: !isRequired,
             isReadonly: readOnlyInputs,
             docs: createJsdoc({
                 default: defaultValue,
                 description,
             }),
         })
-        runtimeTypes[inputNameWithCasing]
     }
 
-    const source = project.createSourceFile(join(modulePath, 'index.ts'), {
+    const source = project.createSourceFile(savePath === false ? join(modulePath, 'index.ts') : savePath, {
         statements: [
             inputInterface,
             {
@@ -123,8 +136,7 @@ export const generateTypes = async ({
                     {
                         name: 'inputTypes',
                         initializer: writer => {
-                            Writers.object({})
-                            writer('5')
+                            Writers.object(mapValues(runtimeTypes, obj => (writer: CodeBlockWriter) => writer.write(JSON.stringify(obj))))(writer)
                         },
                     },
                 ],
@@ -132,11 +144,28 @@ export const generateTypes = async ({
         ],
     })
 
+    if (savePath === false) {
+        await writeFile(join(modulePath, 'package.json'), {
+            name: '.actions-inputs',
+            version: '0.0.0',
+            types: 'index.d.ts',
+            main: 'index.js',
+        })
+    }
+
     const diagnostics = project.getPreEmitDiagnostics()
     if (diagnostics.length) {
         console.error(project.formatDiagnosticsWithColorAndContext(diagnostics))
         throw new Error('Failed to generate fresh types, there are now out of sync!')
     }
 
-    await project.emit()
+    if (savePath === false) {
+        await project.emit()
+    } else {
+        await project.save()
+    }
 }
+
+program.command('generate', 'Generate actions-inputs')..action()
+
+program.parse(process.argv)

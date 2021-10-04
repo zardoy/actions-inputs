@@ -11,6 +11,9 @@ interface Inputs {
 
 export const inputTypes: InputsTypes = {}
 
+// runtime options
+let readOnlyInputs = true
+
 // from @actions/core module
 export function getInput(name: string, required: boolean): string {
     const val: string = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || ''
@@ -21,38 +24,33 @@ export function getInput(name: string, required: boolean): string {
 }
 
 export const inputs = new Proxy<Inputs>({} as Inputs, {
-    get(_, name: keyof Inputs) {
-        const throwIfNoValue = inputTypes[name].required && /*throwOnMissingRequired*/ true
-        const value = core.getInput(name, {
-            required: throwIfNoValue,
-        })
-        // would always return undefined instead of empty string
-        if (value === '') {
+    get(_, name: string) {
+        const isRequired = inputTypes[name]!.required
+        const inputValue = getInput(name, isRequired)
+        // if input is missing return undefined instead of empty string
+        if (inputValue === '') {
             return undefined
         }
-        // todo universal runtime type checking (rewrite)
-        const parseMethod = inputTypes[name].runtimeType
-        if (parseMethod === 'boolean') {
-            const parsed = ['true', '1'].includes(value) ? true : ['false', '0'].includes(value) ? false : undefined
-            if (options.throwOnIncorrectType && parsed === undefined) {
-                throw new TypeError(`Expected boolean type, seen ${value}. Use true or false instead.`)
-            } else {
-                return parsed
+        const parseMethod = inputTypes[name]!.runtimeType
+        // return parsed value from switch
+        return (() => {
+            switch (parseMethod) {
+                case 'boolean':
+                    const bool = ['true', '1'].includes(inputValue) ? true : ['false', '0'].includes(inputValue) ? false : undefined
+                    if (bool === undefined) throw new TypeError(`Expected boolean type, seen ${inputValue}. Use true or false instead.`)
+                    return bool
+                case 'number':
+                    const num = +inputValue
+                    // empty string shouldn't be zero
+                    if (inputValue === '' || !isFinite(num)) throw new TypeError(`Expected number type, seen ${inputValue}. Use only number value.`)
+                    return num
+                case 'string':
+                    return inputValue
             }
-        } else if (parseMethod === 'number') {
-            // Infinity still allowed!
-            const parsed = !isNaN(+value) ? +value : undefined
-            if (options.throwOnIncorrectType && parsed === undefined) {
-                throw new TypeError(`Expected number type, seen ${value}. Use only number value.`)
-            } else {
-                return parsed
-            }
-        } else {
-            return value
-        }
+        })()
     },
     set(_, name: string, newValue) {
-        if (options.readOnlyInputs) {
+        if (readOnlyInputs) {
             return false
         } else {
             // assumed that user uses TypeScript for type checking so there is no runtime type checking
@@ -64,7 +62,7 @@ export const inputs = new Proxy<Inputs>({} as Inputs, {
         return {
             enumerable: true,
             configurable: true,
-            writable: false,
+            writable: readOnlyInputs,
         }
     },
     ownKeys() {
